@@ -1,0 +1,22 @@
+PODS:
+  - dart_avif_decoder (0.0.1):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+
+DEPENDENCIES:
+  - dart_avif_decoder (from `Flutter/ephemeral/.symlinks/plugins/dart_avif_decoder/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+
+EXTERNAL SOURCES:
+  dart_avif_decoder:
+    :path: Flutter/ephemeral/.symlinks/plugins/dart_avif_decoder/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+
+SPEC CHECKSUMS:
+  dart_avif_decoder: d27515b8f26dc85c747f855d0dfd6510b2f0f8ad
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+
+PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
+
+COCOAPODS: 1.16.2
