@@ -747,7 +747,7 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 [[package]]
 name = "libavif-sys"
 version = "0.14.3"
-source = "git+https://github.com/yekeskin/libavif-rs.git#519cb3ea526d3a7316face89f52bcbb2c432ec9e"
+source = "git+https://github.com/telosnex/libavif-rs.git#519cb3ea526d3a7316face89f52bcbb2c432ec9e"
 dependencies = [
  "cmake",
  "libc",
@@ -764,7 +764,7 @@ checksum = "18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398"
 [[package]]
 name = "libdav1d-sys"
 version = "0.5.0"
-source = "git+https://github.com/yekeskin/libavif-rs.git#519cb3ea526d3a7316face89f52bcbb2c432ec9e"
+source = "git+https://github.com/telosnex/libavif-rs.git#519cb3ea526d3a7316face89f52bcbb2c432ec9e"
 
 [[package]]
 name = "libfuzzer-sys"
