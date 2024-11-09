@@ -1,92 +1,13 @@
 # dart_avif_decoder
 
-A new Flutter FFI plugin project.
+AVIF decoding functionality for both native and Web WASM environments. This package is derived from the decoder component of [flutter_avif](https://github.com/yekeskin/flutter_avif), enhanced with Web support.
 
-## Getting Started
+[flutter_avif](https://github.com/yekeskin/flutter_avif) should be preferred. This is much narrower, and only has the decoder with a new Web implementation.
 
-This project is a starting point for a Flutter
-[FFI plugin](https://flutter.dev/to/ffi-package),
-a specialized package that includes native code directly invoked with Dart FFI.
+# Full Notes
 
-## Project structure
-
-This template uses the following structure:
-
-* `src`: Contains the native source code, and a CmakeFile.txt file for building
-  that source code into a dynamic library.
-
-* `lib`: Contains the Dart code that defines the API of the plugin, and which
-  calls into the native code using `dart:ffi`.
-
-* platform folders (`android`, `ios`, `windows`, etc.): Contains the build files
-  for building and bundling the native code library with the platform application.
-
-## Building and bundling native code
-
-The `pubspec.yaml` specifies FFI plugins as follows:
-
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        ffiPlugin: true
-```
-
-This configuration invokes the native build for the various target platforms
-and bundles the binaries in Flutter applications using these FFI plugins.
-
-This can be combined with dartPluginClass, such as when FFI is used for the
-implementation of one platform in a federated plugin:
-
-```yaml
-  plugin:
-    implements: some_other_plugin
-    platforms:
-      some_platform:
-        dartPluginClass: SomeClass
-        ffiPlugin: true
-```
-
-A plugin can have both FFI and method channels:
-
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        pluginClass: SomeName
-        ffiPlugin: true
-```
-
-The native build systems that are invoked by FFI (and method channel) plugins are:
-
-* For Android: Gradle, which invokes the Android NDK for native builds.
-  * See the documentation in android/build.gradle.
-* For iOS and MacOS: Xcode, via CocoaPods.
-  * See the documentation in ios/dart_avif_decoder.podspec.
-  * See the documentation in macos/dart_avif_decoder.podspec.
-* For Linux and Windows: CMake.
-  * See the documentation in linux/CMakeLists.txt.
-  * See the documentation in windows/CMakeLists.txt.
-
-## Binding to native code
-
-To use the native code, bindings in Dart are needed.
-To avoid writing these by hand, they are generated from the header file
-(`src/dart_avif_decoder.h`) by `package:ffigen`.
-Regenerate the bindings by running `dart run ffigen --config ffigen.yaml`.
-
-## Invoking native code
-
-Very short-running native functions can be directly invoked from any isolate.
-For example, see `sum` in `lib/dart_avif_decoder.dart`.
-
-Longer-running functions should be invoked on a helper isolate to avoid
-dropping frames in Flutter applications.
-For example, see `sumAsync` in `lib/dart_avif_decoder.dart`.
-
-## Flutter help
-
-For help getting started with Flutter, view our
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+The situation resulting in this being the best situation is complex.
+- `flutter_avif` is based on `flutter_rust_bridge`, which changed significantly in 2.x.x, enough that the `flutter_avif` has found it difficult to find time to update.
+- Updating `flutter_avif` in place didn't work, as the author notes, it is a significant amount of work, and in my estimation, it may not be possible. There's not many docs on migrating from 1.x.x to 2.x.x, and those that exist recommend running a `flutter_rust_bridge create .` command, much like you'd run `flutter create .` on an existing project to add a new platform. However, `flutter_rust_bridge create` variant is challenging to understand in the context of an upgrade, it resulted in new demos and API replacing some of the existing ones, and others didn't seem to update.
+- At that point, I tried creating a new `flutter_rust_bridge` project, and then porting the `flutter_avif` code into it. This worked on native, however, not on web. I have a feeling `flutter_avif` is set up to do custom initialization of the plugin to handle this situation, but it's not clear how to do that and support the new `flutter_rust_bridge` setup.
+- At that point, I decided to prioritize the core feature in `flutter_avif` required for my use case, turning an AVIF into a `dart:ui.Image`. I wrote a web implementation that avoids using `flutter_rust_bridge` entirely and uses `dart:web` and `dart:js_interop` only. This is the package you see here.
